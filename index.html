@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR estilo ICPARD</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: #002D80;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #003BB8;
+        }
+
+        #qr-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Generar QR estilo ICPARD</h1>
+
+    <input id="qr-text" type="text" placeholder="Escribe el enlace aquí">
+
+    <button onclick="generateQR()">Generar QR</button>
+
+    <div id="qr-container"></div>
+
+    <button onclick="downloadQR()" style="margin-top:20px;background:#c40000;">
+        Descargar PNG
+    </button>
+
+    <script>
+        let qrCode = new QRCodeStyling({
+            width: 600,
+            height: 600,
+            type: "png",
+            data: "",
+            image: "assets/logo.png",  
+            margin: 20,
+
+            dotsOptions: {
+                color: "#002D80",    
+                type: "square"        
+            },
+
+            cornersSquareOptions: {
+                color: "#002D80",     
+                type: "square"
+            },
+
+            cornersDotOptions: {
+                color: "#D40000",    
+                type: "square"
+            },
+
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 0,
+                imageSize: 0.35     
+            }
+        });
+
+        function generateQR() {
+            const text = document.getElementById("qr-text").value;
+
+            if (!text.trim()) {
+                alert("Debe escribir un enlace");
+                return;
+            }
+
+            qrCode.update({
+                data: text
+            });
+
+            document.getElementById("qr-container").innerHTML = "";
+            qrCode.append(document.getElementById("qr-container"));
+        }
+
+        function downloadQR() {
+            qrCode.download({
+                name: "qr_icpard",
+                extension: "png"
+            });
+        }
+    </script>
+
+</body>
+</html>
+
